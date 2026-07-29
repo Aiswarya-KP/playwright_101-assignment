@@ -10,11 +10,9 @@ export class SliderPage {
   constructor(page: Page) {
     this.page = page;
 
-    this.dragSliderLink = page.getByRole('link', {
-      name: 'Drag & Drop Sliders'
-    });
+    this.dragSliderLink = page.locator('a[href*="drag-drop-range-sliders-demo"]').filter({ hasText: 'Drag & Drop Sliders' }).first();
 
-    this.slider = page.locator("input[value='15']");
+    this.slider = page.locator('#slider3').getByRole('slider');
 
     this.sliderValue = page.locator('#rangeSuccess');
   }
@@ -24,10 +22,13 @@ export class SliderPage {
   }
 
   async openSliderPage() {
+    await this.dragSliderLink.waitFor({ state: 'visible' });
     await this.dragSliderLink.click();
+    await this.page.waitForURL(/drag-drop-range-sliders-demo/, { timeout: 10000 });
   }
 
   async moveSliderTo95() {
+    await this.slider.waitFor({ state: 'visible' });
     await this.slider.evaluate((element: HTMLInputElement) => {
       element.value = '95';
       element.dispatchEvent(new Event('input', { bubbles: true }));

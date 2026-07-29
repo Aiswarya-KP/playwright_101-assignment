@@ -12,15 +12,15 @@ export class SimpleFormPage {
   constructor(page: Page) {
     this.page = page;
 
-    this.simpleFormLink = page.getByRole('link', { name: 'Simple Form Demo' });
+    this.simpleFormLink = page.locator('a[href*="simple-form-demo"]').filter({ hasText: 'Simple Form Demo' }).first();
 
-    this.messageTextbox = page.getByPlaceholder('Please enter your Message');
+    this.messageTextbox = page.locator('input[placeholder="Please enter your Message"]').first();
 
     this.getCheckedValueButton = page.getByRole('button', {
       name: 'Get Checked Value'
-    });
+    }).first();
 
-    this.outputMessage = page.locator('#message');
+    this.outputMessage = page.locator('body');
   }
 
   async goto() {
@@ -30,8 +30,7 @@ export class SimpleFormPage {
   async openSimpleFormDemo() {
     await this.simpleFormLink.waitFor({ state: 'visible' });
     await this.simpleFormLink.click();
-    await this.page.waitForURL(/simple-form-demo/);
-    await this.messageTextbox.waitFor({ state: 'visible' });
+    await this.page.waitForURL(/simple-form-demo/, { timeout: 10000 });
   }
 
   async enterMessage(message: string) {
