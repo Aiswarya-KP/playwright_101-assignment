@@ -51,7 +51,9 @@ export class InputFormPage {
   }
 
   async openInputForm() {
-    await this.inputFormLink.click();
+    await this.page.goto(
+    'https://www.testmuai.com/selenium-playground/input-form-demo/'
+  );
   }
 
   async submit() {
