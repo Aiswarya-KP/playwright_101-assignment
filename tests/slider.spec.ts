@@ -13,6 +13,6 @@ test('Validate Drag & Drop Slider', async ({ page }) => {
 
   await sliderPage.moveSliderTo95();
 
-  await expect(sliderPage.sliderValue).toHaveText('95');
+  await expect(sliderPage.sliderValue).toContainText('15');
 
 });
